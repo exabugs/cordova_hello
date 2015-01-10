@@ -22,7 +22,8 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-bower-task');
 
   grunt.registerTask('default', [
-    'npm-install'
+    'npm-install',
+    'bower'
   ]);
 
 };
