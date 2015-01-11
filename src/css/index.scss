@@ -113,3 +113,10 @@ h1 {
     animation:fade 3000ms infinite;
     -webkit-animation:fade 3000ms infinite;
 }
+
+#hammer {
+    background:url(../img/popy.png) no-repeat;
+    height: image-height("../img/popy.png");
+    width: image-width("../img/popy.png");
+    position:absolute;
+}

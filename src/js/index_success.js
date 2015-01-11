@@ -18,13 +18,13 @@
  */
 
 if (typeof String.prototype.endsWith !== 'function') {
-    String.prototype.endsWith = function (str) {
+    String.prototype.endsWith = function(str) {
         return this.indexOf(str, this.length - str.length) !== -1;
     };
 }
 
 if (typeof String.prototype.startsWith != 'function') {
-    String.prototype.startsWith = function (str) {
+    String.prototype.startsWith = function (str){
         return this.lastIndexOf(str, 0) === 0;
     }
 }
@@ -46,13 +46,13 @@ var app = {
         //var element = document.body;
         // Hammer
         Hammer(element).get('pinch').set({enable: true});
-        //Hammer(element).get('rotate').set({enable: true});
+        //  Hammer(element).get('rotate').set({enable: true});
         Hammer(element).get('pan').set({direction: Hammer.DIRECTION_ALL});
         Hammer(element).get('swipe').set({direction: Hammer.DIRECTION_ALL});
 
         this.hammer(element, ['panstart', 'panmove', 'panend']);
         this.hammer(element, ['pinchstart', 'pinchmove', 'pinchend']);
-        this.hammer(element, ['rotatestart', 'rotatemove', 'rotateend']);
+        this.hammer(element, ['rotatestart', 'rotatemove']);
         this.hammer(element, ['swipeleft', 'swiperight', 'swipeup', 'swipedown']);
         this.hammer(element, ['tap', 'press']);
     },
@@ -84,29 +84,46 @@ var app = {
         console.log('Received Event: ' + event.type);
 
         var element = event.target;
+        var center = event.center;
+
+        element['data-ds'] = element['data-ds'] || 1.0;
+        var ds = event.scale * element['data-ds']; // scale
 
         if (event.type.endsWith('start')) {
+//            var dw = (1.0 - ds) * element.clientWidth;
+//            var dh = (1.0 - ds) * element.clientHeight;
+//            console.log('dw:' + dw + ' dh:' + dh);
+
             var bounds = element.getBoundingClientRect();
+//            console.log('bounds.left:' + bounds.left + ' bounds.top:' + bounds.top);
+//            element['data-dx'] = center.x - bounds.left;
+//            element['data-dy'] = center.y - bounds.top;
             element['data-dx'] = element['data-dx'] || bounds.left;
             element['data-dy'] = element['data-dy'] || bounds.top;
-            element['data-ds'] = element['data-ds'] || 1.0;
+
         }
 
-        var dx = element['data-dx'] + event.deltaX;
-        var dy = element['data-dy'] + event.deltaY;
-        var ds = element['data-ds'] * event.scale;
+        //    var dx = center.x - element['data-dx'];
+        //    var dy = center.y - element['data-dy'];
+            var dx = event.deltaX + element['data-dx'];
+            var dy = event.deltaY + element['data-dy'];
 
         var transform = [
             'translate3d(' + [dx + 'px', dy + 'px', 0].join(',') + ')',
             'scale(' + ds + ')'
         ].join(' ');
 
+//        console.log('scale:' + event.scale);
+
+        var bounds = element.getBoundingClientRect();
+        console.log('bounds.left:' + bounds.left + ' bounds.top:' + bounds.top);
+
         element.style.webkitTransform = transform;
 
         if (event.type.endsWith('end')) {
             element['data-dx'] = dx;
             element['data-dy'] = dy;
-            element['data-ds'] = ds;
+            element['data-ds'] = event.scale * element['data-ds'];
         }
     }
 };

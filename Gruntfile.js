@@ -1,5 +1,7 @@
 'use strict';
 
+// @see: https://gist.github.com/jonathandixon/7418730
+
 module.exports = function(grunt) {
 
   grunt.initConfig({
@@ -85,8 +87,75 @@ module.exports = function(grunt) {
           ext: '.html'
         }]
       }
-    }
+    },
 
+    connect: {
+      server: {
+        options: {
+          port: 7000,
+          hostname: 'localhost',
+          base: 'www',
+          keepalive: true
+        }
+      }
+    },
+
+    cordovacli: {
+      options: {
+        path: './'
+      },
+      add_platforms: {
+        options: {
+          command: 'platform',
+          action: 'add',
+          platforms: ['ios', 'android']
+        }
+      },
+      add_plugins: {
+        options: {
+          command: 'plugin',
+          action: 'add',
+          plugins: [
+            'console',
+            'device',
+            'geolocation',
+            'network-information',
+            'splashscreen',
+            'https://github.com/phonegap-build/PushPlugin.git'
+          ]
+        }
+      },
+      build_ios: {
+        options: {
+          command: 'build',
+          platforms: ['ios']
+        }
+      },
+      build_android: {
+        options: {
+          command: 'build',
+          platforms: ['android']
+        }
+      },
+      prepare_ios: {
+        options: {
+          command: 'prepare',
+          platforms: ['ios']
+        }
+      },
+      prepare_android: {
+        options: {
+          command: 'prepare',
+          platforms: ['android']
+        }
+      },
+      serve: {
+        options: {
+          command: 'serve',
+          port: 7000
+        }
+      }
+    }
 
   });
 
@@ -99,6 +168,8 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-compass');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-contrib-connect');
+  grunt.loadNpmTasks('grunt-cordovacli');
 
   grunt.registerTask('default', [
     'clean',
