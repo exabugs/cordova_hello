@@ -29,6 +29,9 @@ if (typeof String.prototype.startsWith != 'function') {
     }
 }
 
+function round(val, unit) {
+    return Math.round(val / unit) * unit;
+}
 
 var app = {
     // Application Constructor
@@ -46,12 +49,12 @@ var app = {
         //var element = document.body;
         // Hammer
         Hammer(element).get('pinch').set({enable: true});
-        //Hammer(element).get('rotate').set({enable: true});
+        Hammer(element).get('rotate').set({enable: true});
         Hammer(element).get('pan').set({direction: Hammer.DIRECTION_ALL});
         Hammer(element).get('swipe').set({direction: Hammer.DIRECTION_ALL});
 
         this.hammer(element, ['panstart', 'panmove', 'panend']);
-        this.hammer(element, ['pinchstart', 'pinchmove', 'pinchend']);
+        //this.hammer(element, ['pinchstart', 'pinchmove', 'pinchend']);
         this.hammer(element, ['rotatestart', 'rotatemove', 'rotateend']);
         this.hammer(element, ['swipeleft', 'swiperight', 'swipeup', 'swipedown']);
         this.hammer(element, ['tap', 'press']);
@@ -81,7 +84,7 @@ var app = {
     },
 
     hammerEvent: function (event) {
-        console.log('Received Event: ' + event.type);
+      //  console.log('Received Event: ' + event.type);
 
         var element = event.target;
 
@@ -90,15 +93,27 @@ var app = {
             element['data-dx'] = element['data-dx'] || bounds.left;
             element['data-dy'] = element['data-dy'] || bounds.top;
             element['data-ds'] = element['data-ds'] || 1.0;
+            element['data-dr'] = element['data-dr'] || 0.0;
         }
+
+        // Avoid angle sometimes jumps from 180 to -180
+        if (170 <= Math.abs(element['data-dd'] - event.rotation)) {
+            //element['data-dr'] += 180;
+            event.rotation += 180;
+            console.log('jumps from 180 to -180');
+        }
+        element['data-dd'] = event.rotation;
 
         var dx = element['data-dx'] + event.deltaX;
         var dy = element['data-dy'] + event.deltaY;
         var ds = element['data-ds'] * event.scale;
+        var dr = element['data-dr'] + event.rotation;
+
 
         var transform = [
             'translate3d(' + [dx + 'px', dy + 'px', 0].join(',') + ')',
-            'scale(' + ds + ')'
+            'scale(' + ds + ')',
+            'rotate(' + round(dr, 45) + 'deg)'
         ].join(' ');
 
         element.style.webkitTransform = transform;
@@ -107,6 +122,8 @@ var app = {
             element['data-dx'] = dx;
             element['data-dy'] = dy;
             element['data-ds'] = ds;
+            element['data-dr'] = dr;
+            element['data-dd'] = 0;
         }
     }
 };
