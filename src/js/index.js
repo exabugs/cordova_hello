@@ -46,6 +46,13 @@ var app = {
         document.addEventListener('deviceready', this.onDeviceReady, false);
 
         var element = document.getElementById('hammer');
+        this.bindHammerEvents(element);
+
+        var google = document.getElementById('google');
+        this.bindHammerEvents(google);
+    },
+
+    bindHammerEvents: function (element) {
         //var element = document.body;
         // Hammer
         Hammer(element).get('pinch').set({enable: true});
