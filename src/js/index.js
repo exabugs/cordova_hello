@@ -124,6 +124,16 @@ var app = {
             element['data-ds'] = ds;
             element['data-dr'] = dr;
             element['data-dd'] = 0;
+
+            // Avoid a little moving after Pinch.
+            if (1 < event.pointers.length) {
+                var pan = Hammer(element).get('pan');
+                pan.set({enable: false});
+                setTimeout(function () {
+                    pan.set({enable: true});
+                }, 300);
+            }
+
         }
     }
 };
