@@ -114,15 +114,6 @@ h1 {
     -webkit-animation:fade 3000ms infinite;
 }
 
-#hammer {
-    background:url(../img/popy.png) no-repeat;
-    height: image-height("../img/popy.png");
-    width: image-width("../img/popy.png");
-    position: absolute;
-}
-#google {
-    background:url(../img/google.png) no-repeat;
-    height: image-height("../img/google.png");
-    width: image-width("../img/google.png");
+.hammer {
     position: absolute;
 }

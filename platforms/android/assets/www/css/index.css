@@ -139,6 +139,11 @@ h1 {
 }
 
 /* line 117, ../../src/css/index.scss */
+.hammer {
+  position: absolute;
+}
+
+/* line 121, ../../src/css/index.scss */
 #hammer {
   background: url(../img/popy.png) no-repeat;
   height: 150px;
@@ -146,7 +151,7 @@ h1 {
   position: absolute;
 }
 
-/* line 123, ../../src/css/index.scss */
+/* line 127, ../../src/css/index.scss */
 #google {
   background: url(../img/google.png) no-repeat;
   height: 190px;

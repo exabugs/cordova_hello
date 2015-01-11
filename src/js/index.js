@@ -45,16 +45,15 @@ var app = {
     bindEvents: function () {
         document.addEventListener('deviceready', this.onDeviceReady, false);
 
-        var element = document.getElementById('hammer');
-        this.bindHammerEvents(element);
-
-        var google = document.getElementById('google');
-        this.bindHammerEvents(google);
+        // Hammer
+        var hammers = document.querySelectorAll('.hammer');
+        for (var i in hammers) {
+            this.bindHammerEvents(hammers[i]);
+        }
     },
 
+    // Hammer
     bindHammerEvents: function (element) {
-        //var element = document.body;
-        // Hammer
         Hammer(element).get('pinch').set({enable: true});
         Hammer(element).get('rotate').set({enable: true});
         Hammer(element).get('pan').set({direction: Hammer.DIRECTION_ALL});

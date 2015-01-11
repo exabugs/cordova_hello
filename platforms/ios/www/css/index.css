@@ -139,17 +139,6 @@ h1 {
 }
 
 /* line 117, ../../src/css/index.scss */
-#hammer {
-  background: url(../img/popy.png) no-repeat;
-  height: 150px;
-  width: 150px;
-  position: absolute;
-}
-
-/* line 123, ../../src/css/index.scss */
-#google {
-  background: url(../img/google.png) no-repeat;
-  height: 190px;
-  width: 538px;
+.hammer {
   position: absolute;
 }
