@@ -24,7 +24,10 @@
       "js": "zepto.min.js"
     },
     "hammerjs": {
-      "js": "hammer.min.js"
+      "js": [
+        "hammer.min.js",
+        "hammer.min.map"
+      ]
     }
   }
 }

@@ -5,6 +5,8 @@ module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
 
+    clean: ['www'],
+
     bower: {
       install: {
         options: {
@@ -91,6 +93,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-npm-install');
   grunt.loadNpmTasks('grunt-bower-install');
   grunt.loadNpmTasks('grunt-bower-task');
+  grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-jade');
   grunt.loadNpmTasks('grunt-contrib-compass');
@@ -98,9 +101,13 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-uglify');
 
   grunt.registerTask('default', [
+    'clean',
     'npm-install',
     'bower',
-    'copy'
+    'copy',
+    'compass',
+    'jade',
+    'uglify'
   ]);
 
 };
