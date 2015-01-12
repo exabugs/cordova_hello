@@ -126,7 +126,7 @@ var app = {
             });
         }
 
-        navigator.vibrate(10);
+        navigator.vibrate(300);
 
     },
 
