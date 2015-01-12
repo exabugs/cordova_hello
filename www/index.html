@@ -12,15 +12,55 @@
   </head>
   <body>
     <div class="app">
-      <h1>Apache Cordova</h1>
+      <h1>APACHE CORDOVA</h1>
       <div id="deviceready" class="blink">
-        <p class="event listening">Connecting to Device</p>
-        <p class="event received">Device is Ready</p>
+        <p class="event listening">CONNECTING TO DEVICE</p>
+        <p class="event received">DEVICE IS READY</p>
       </div>
     </div><img src="img/google.png" class="hammer"><img src="img/popy.png" class="hammer"><img src="img/popy.png" class="hammer">
-    <script type="text/javascript" src="cordova.js"></script>
-    <script type="text/javascript" src="js/zepto.min.js"></script>
-    <script type="text/javascript" src="js/hammer.min.js"></script>
-    <script type="text/javascript" src="js/index.min.js"></script>
+    <h2>Device
+      <table border="1" class="device">
+        <tr>
+          <td>model</td>
+          <td id="model" class="device"></td>
+        </tr>
+        <tr>
+          <td>uuid</td>
+          <td id="uuid" class="device"></td>
+        </tr>
+        <tr>
+          <td>platform</td>
+          <td id="platform" class="device"></td>
+        </tr>
+        <tr>
+          <td>version</td>
+          <td id="version" class="device"></td>
+        </tr>
+        <tr>
+          <td>cordova</td>
+          <td id="cordova" class="device"></td>
+        </tr>
+      </table>
+    </h2>
+    <h2>GeoLocation
+      <table border="1" class="device">
+        <tr>
+          <td>latitude</td>
+          <td id="latitude" class="coords"></td>
+        </tr>
+        <tr>
+          <td>longitude</td>
+          <td id="longitude" class="coords"></td>
+        </tr>
+      </table>
+    </h2>
+    <div id="map-canvas"></div>
+    <ul id="app-status-ul"></ul>
+    <script src="js/googlemap.min.js"></script>
+    <script src="cordova.js"></script>
+    <script src="js/zepto.min.js"></script>
+    <script src="js/hammer.min.js"></script>
+    <script src="PushNotification.js"></script>
+    <script src="js/index.min.js"></script>
   </body>
 </html>

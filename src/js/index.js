@@ -26,6 +26,10 @@
 // 有効にした日 2015/01/12 6:12:00
 // 有効にしたユーザー exabugs@gmail.com （自分）
 
+// GoogleMap
+// <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCn0OxlbypwegyGSARLx_CdvhTCAPegWgs&amp;sensor=true"></script>
+// ->googlemap.js
+
 var server = 'http://192.168.11.3:3000';
 
 var senderID = '199529005488';

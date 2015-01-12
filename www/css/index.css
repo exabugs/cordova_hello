@@ -41,7 +41,6 @@ body {
   height: 100%;
   margin: 0px;
   padding: 0px;
-  text-transform: uppercase;
   width: 100%;
 }
 
@@ -141,4 +140,26 @@ h1 {
 /* line 117, ../../src/css/index.scss */
 .hammer {
   position: absolute;
+}
+
+/* line 121, ../../src/css/index.scss */
+table.device {
+  border-collapse: collapse;
+}
+
+/* line 124, ../../src/css/index.scss */
+table.device td {
+  text-align: left;
+  border: 1px #555555 solid;
+}
+
+/* line 129, ../../src/css/index.scss */
+#map-canvas {
+  width: 200px;
+  height: 200px;
+}
+
+/* line 133, ../../src/css/index.scss */
+td.coords {
+  text-align: right;
 }
