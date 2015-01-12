@@ -152,3 +152,14 @@ table.device td {
   text-align: left;
   border: 1px #555555 solid;
 }
+
+/* line 129, ../../src/css/index.scss */
+#map-canvas {
+  width: 200px;
+  height: 200px;
+}
+
+/* line 133, ../../src/css/index.scss */
+td.coords {
+  text-align: right;
+}

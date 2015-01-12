@@ -39,9 +39,19 @@ html
                     td cordova
                     td.device#cordova
 
+        h2 GeoLocation
+            table.device(border='1')
+                tr
+                    td latitude
+                    td.coords#latitude
+                tr
+                    td longitude
+                    td.coords#longitude
+        #map-canvas
 
-        script(type='text/javascript', src='cordova.js')
-        script(type='text/javascript', src='js/zepto.min.js')
-        script(type='text/javascript', src='js/hammer.min.js')
-        script(type='text/javascript', src='js/index.min.js')
+        script(src='http://maps.googleapis.com/maps/api/js?key=AIzaSyCn0OxlbypwegyGSARLx_CdvhTCAPegWgs&sensor=true')
+        script(src='cordova.js')
+        script(src='js/zepto.min.js')
+        script(src='js/hammer.min.js')
+        script(src='js/index.min.js')
 

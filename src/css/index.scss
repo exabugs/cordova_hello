@@ -125,3 +125,11 @@ table.device td {
     text-align: left;
     border: 1px #555555 solid;
 }
+
+#map-canvas {
+    width: 200px;
+    height: 200px;
+}
+td.coords {
+    text-align: right;
+}

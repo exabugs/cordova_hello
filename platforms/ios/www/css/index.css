@@ -145,10 +145,22 @@ h1 {
 /* line 121, ../../src/css/index.scss */
 table.device {
   border-collapse: collapse;
+  z-index: 1000;
 }
 
-/* line 124, ../../src/css/index.scss */
+/* line 125, ../../src/css/index.scss */
 table.device td {
   text-align: left;
   border: 1px #555555 solid;
+}
+
+/* line 130, ../../src/css/index.scss */
+#map-canvas {
+  width: 200px;
+  height: 200px;
+}
+
+/* line 134, ../../src/css/index.scss */
+td.coords {
+  text-align: right;
 }

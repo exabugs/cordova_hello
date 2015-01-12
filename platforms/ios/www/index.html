@@ -42,9 +42,23 @@
         </tr>
       </table>
     </h2>
-    <script type="text/javascript" src="cordova.js"></script>
-    <script type="text/javascript" src="js/zepto.min.js"></script>
-    <script type="text/javascript" src="js/hammer.min.js"></script>
-    <script type="text/javascript" src="js/index.min.js"></script>
+    <h2>GeoLocation
+      <table border="1" class="device">
+        <tr>
+          <td>latitude</td>
+          <td id="latitude" class="coords"></td>
+        </tr>
+        <tr>
+          <td>longitude</td>
+          <td id="longitude" class="coords"></td>
+        </tr>
+      </table>
+    </h2>
+    <div id="map-canvas"></div>
+    <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCn0OxlbypwegyGSARLx_CdvhTCAPegWgs&amp;sensor=true"></script>
+    <script src="cordova.js"></script>
+    <script src="js/zepto.min.js"></script>
+    <script src="js/hammer.min.js"></script>
+    <script src="js/index.min.js"></script>
   </body>
 </html>

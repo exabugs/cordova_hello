@@ -49,7 +49,44 @@ var app = {
         // Hammer
         $.each(document.querySelectorAll('.hammer'), function () {
             self.bindHammerEvents(this);
-        })
+        });
+    },
+
+    googleMap: null,
+    googleMarker: null,
+
+    // Map
+    geoSuccess: function(pos) {
+        $.each(document.querySelectorAll('td.coords'), function () {
+            $(this).text(pos.coords[this.id]);
+        });
+
+        if (!google.maps) return;
+
+        if (!this.googleMap) {
+            this.googleMap = new google.maps.Map(document.getElementById('map-canvas'), {
+                zoom: 16,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            });
+        } else {
+            var latlng = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
+            this.googleMap.panTo(latlng);
+            if (!this.googleMarker) {
+                this.googleMarker = new google.maps.Marker({
+                    position: latlng,
+                    map: this.googleMap,
+                    animation: google.maps.Animation.DROP,
+                    icon: 'http://gmaps-samples.googlecode.com/svn/trunk/markers/red/blank.png'
+                    //icon: 'www/img/marker.png'
+                });
+            } else {
+                this.googleMarker.setPosition(latlng);
+            }
+        }
+    },
+
+    geoError: function(e) {
+      console.log(e);
     },
 
     // Hammer
@@ -80,6 +117,10 @@ var app = {
         $.each(document.querySelectorAll('td.device'), function () {
             $(this).text(device[this.id]);
         });
+
+        // Map
+        navigator.geolocation.watchPosition(app.geoSuccess, app.geoError);
+
     },
 
     // Update DOM on a Received Event
