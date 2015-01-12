@@ -54,33 +54,31 @@ var app = {
 
     googleMap: null,
     googleMarker: null,
+    coords: null,
 
     // Map
     geoSuccess: function(pos) {
+        app.coords = pos.coords;
         $.each(document.querySelectorAll('td.coords'), function () {
             $(this).text(pos.coords[this.id]);
         });
 
-        if (!google.maps) return;
-
-        if (!this.googleMap) {
-            this.googleMap = new google.maps.Map(document.getElementById('map-canvas'), {
-                zoom: 16,
-                mapTypeId: google.maps.MapTypeId.ROADMAP
-            });
-        } else {
+        if (app.googleMap) {
             var latlng = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
-            this.googleMap.panTo(latlng);
-            if (!this.googleMarker) {
-                this.googleMarker = new google.maps.Marker({
+            app.googleMap.panTo(latlng);
+
+            // Marker
+            if (!app.googleMarker) {
+                app.googleMarker = new google.maps.Marker({
                     position: latlng,
-                    map: this.googleMap,
-                    animation: google.maps.Animation.DROP,
-                    icon: 'http://gmaps-samples.googlecode.com/svn/trunk/markers/red/blank.png'
+                    map: app.googleMap,
+                    //icon: 'http://gmaps-samples.googlecode.com/svn/trunk/markers/red/blank.png'
                     //icon: 'www/img/marker.png'
+                    //icon: $.get('../img/popy.png')
+                    animation: google.maps.Animation.DROP
                 });
             } else {
-                this.googleMarker.setPosition(latlng);
+                app.googleMarker.setPosition(latlng);
             }
         }
     },
@@ -120,6 +118,15 @@ var app = {
 
         // Map
         navigator.geolocation.watchPosition(app.geoSuccess, app.geoError);
+
+        if (google.maps) {
+            app.googleMap = new google.maps.Map(document.getElementById('map-canvas'), {
+                zoom: 16,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            });
+        }
+
+        navigator.vibrate(10);
 
     },
 
