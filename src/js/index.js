@@ -43,13 +43,13 @@ var app = {
     // Bind any events that are required on startup. Common events are:
     // 'load', 'deviceready', 'offline', and 'online'.
     bindEvents: function () {
+        var self = this;
         document.addEventListener('deviceready', this.onDeviceReady, false);
 
         // Hammer
-        var hammers = document.querySelectorAll('.hammer');
-        for (var i in hammers) {
-            this.bindHammerEvents(hammers[i]);
-        }
+        $.each(document.querySelectorAll('.hammer'), function () {
+            self.bindHammerEvents(this);
+        })
     },
 
     // Hammer
@@ -76,7 +76,12 @@ var app = {
     // function, we must explicitly call 'app.receivedEvent(...);'
     onDeviceReady: function () {
         app.receivedEvent('deviceready');
+
+        $.each(document.querySelectorAll('td.device'), function () {
+            $(this).text(device[this.id]);
+        });
     },
+
     // Update DOM on a Received Event
     receivedEvent: function (id) {
         var parentElement = document.getElementById(id);
@@ -90,7 +95,7 @@ var app = {
     },
 
     hammerEvent: function (event) {
-      //  console.log('Received Event: ' + event.type);
+        //  console.log('Received Event: ' + event.type);
 
         var element = event.target;
 

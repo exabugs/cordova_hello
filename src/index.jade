@@ -12,14 +12,32 @@ html
         title Hello World
     body
         .app
-            h1 Apache Cordova
+            h1 APACHE CORDOVA
             #deviceready.blink
-                p.event.listening Connecting to Device
-                p.event.received Device is Ready
+                p.event.listening CONNECTING TO DEVICE
+                p.event.received DEVICE IS READY
 
         img.hammer(src='img/google.png')
         img.hammer(src='img/popy.png')
         img.hammer(src='img/popy.png')
+
+        h2 Device
+            table.device(border='1')
+                tr
+                    td model
+                    td.device#model
+                tr
+                    td uuid
+                    td.device#uuid
+                tr
+                    td platform
+                    td.device#platform
+                tr
+                    td version
+                    td.device#version
+                tr
+                    td cordova
+                    td.device#cordova
 
 
         script(type='text/javascript', src='cordova.js')
