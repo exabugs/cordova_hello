@@ -53,11 +53,11 @@ function successHandler(result) {
 
 // result contains any error description text returned from the plugin call
 function errorHandler(error) {
-    //  alert('error = ' + error);
+      alert('SNS register error = ' + error);
 }
 
 // iOS
-function tokenHandler (result) {
+function tokenHandler(result) {
     // Your iOS push server needs to know the token before it can push to this device
     // here is where you might want to send it the token for later use.
     alert('device token = ' + result);
@@ -251,29 +251,30 @@ var app = {
             });
         }
 
-
-        var notification = null;
-        switch (device.platform.toLowerCase()) {
-            case 'android':
-                notification = {
-                    senderID: senderID,
-                    ecb: 'onNotification'
-                };
-                break;
-            case 'ios':
-                notification = {
-                    badge: 'true',
-                    sound: 'true',
-                    alert: 'true',
-                    ecb: 'onNotificationAPN'
-                };
-                break;
-        }
-
         var pushNotification = window.plugins.pushNotification;
+        if (pushNotification) {
 
-        if (pushNotification && notification) {
-            pushNotification.register(successHandler, errorHandler, notification);
+            var notification = null;
+            switch (device.platform.toLowerCase()) {
+                case 'android':
+                    notification = {
+                        senderID: senderID,
+                        ecb: 'onNotification'
+                    };
+                    pushNotification.register(successHandler, errorHandler, notification);
+                    break;
+                case 'ios':
+                    notification = {
+                        badge: 'true',
+                        sound: 'true',
+                        alert: 'true',
+                        ecb: 'onNotificationAPN'
+                    };
+                    pushNotification.register(tokenHandler, errorHandler, notification);
+                    alert('pushNotification : ios');
+
+                    break;
+            }
         }
 
         //navigator.vibrate(300);
