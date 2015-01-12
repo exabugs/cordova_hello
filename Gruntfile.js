@@ -117,11 +117,12 @@ module.exports = function(grunt) {
           action: 'add',
           plugins: [
     //        'console',
+            'dialogs',
             'geolocation',
             'vibration',
     //        'network-information',
     //        'splashscreen',
-    //        'https://github.com/phonegap-build/PushPlugin.git',
+            'https://github.com/phonegap-build/PushPlugin.git',
             'device'
           ]
         }

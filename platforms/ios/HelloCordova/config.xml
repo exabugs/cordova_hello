@@ -28,7 +28,14 @@
     <feature name="Vibration">
         <param name="ios-package" value="CDVVibration" />
     </feature>
+    <feature name="PushPlugin">
+        <param name="ios-package" value="PushPlugin" />
+    </feature>
+    <feature name="Notification">
+        <param name="ios-package" value="CDVNotification" />
+    </feature>
     <name>HelloCordova</name>
+    <preference name="keepRunning" value="true" />
     <description>
         A sample Apache Cordova application that responds to the deviceready event.
     </description>

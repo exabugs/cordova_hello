@@ -17,6 +17,19 @@
  * under the License.
  */
 
+// Google
+// プロジェクト ID: warm-skill-823 プロジェクト番号: 199529005488
+// senderID = プロジェクト番号: 199529005488
+
+// API キー AIzaSyCn0OxlbypwegyGSARLx_CdvhTCAPegWgs
+// リファラー  許可されたリファラー
+// 有効にした日 2015/01/12 6:12:00
+// 有効にしたユーザー exabugs@gmail.com （自分）
+
+var server = 'http://192.168.11.3:3000';
+
+var senderID = '199529005488';
+
 if (typeof String.prototype.endsWith !== 'function') {
     String.prototype.endsWith = function (str) {
         return this.indexOf(str, this.length - str.length) !== -1;
@@ -31,6 +44,118 @@ if (typeof String.prototype.startsWith != 'function') {
 
 function round(val, unit) {
     return Math.round(val / unit) * unit;
+}
+
+// result contains any message sent from the plugin call
+function successHandler(result) {
+    // alert('result = ' + result);
+}
+
+// result contains any error description text returned from the plugin call
+function errorHandler(error) {
+    //  alert('error = ' + error);
+}
+
+// iOS
+function tokenHandler (result) {
+    // Your iOS push server needs to know the token before it can push to this device
+    // here is where you might want to send it the token for later use.
+    alert('device token = ' + result);
+}
+
+// Android and Amazon Fire OS
+function onNotification(e) {
+
+    $("#app-status-ul").append('<li>EVENT -> RECEIVED:' + e.event + '</li>');
+
+    switch (e.event) {
+        case 'registered':
+
+
+            if (e.regid.length > 0) {
+                $("#app-status-ul").append('<li>REGISTERED -> REGID:' + e.regid + "</li>");
+                // Your GCM push server needs to know the regID before it can push to this device
+                // here is where you might want to send it the regID for later use.
+                $.ajax({
+                    type: 'POST',
+                    url: server + '/devices',
+                    data: {
+                        regid: e.regid
+                    },
+                    success: function (j_data) {
+                    }
+                });
+                console.log("regID = " + e.regid);
+            }
+            break;
+
+        case 'message':
+            // if this flag is set, this notification happened while we were in the foreground.
+            // you might want to play a sound to get the user's attention, throw up a dialog, etc.
+            /*
+             if (e.foreground) {
+             $("#app-status-ul").append('<li>--INLINE NOTIFICATION--' + '</li>');
+
+             // on Android soundname is outside the payload.
+             // On Amazon FireOS all custom attributes are contained within payload
+             var soundfile = e.soundname || e.payload.sound;
+             // if the notification contains a soundname, play it.
+             var my_media = new Media("/android_asset/www/" + soundfile);
+             my_media.play();
+             }
+             else {  // otherwise we were launched because the user touched a notification in the notification tray.
+             if (e.coldstart) {
+             $("#app-status-ul").append('<li>--COLDSTART NOTIFICATION--' + '</li>');
+             }
+             else {
+             $("#app-status-ul").append('<li>--BACKGROUND NOTIFICATION--' + '</li>');
+             }
+             }
+             */
+            //           $("#app-status-ul").append('<li>MESSAGE -> MSG: ' + e.payload.message + '</li>');
+            //Only works for GCM
+//            $("#app-status-ul").append('<li>MESSAGE -> MSGCNT: ' + e.payload.msgcnt + '</li>');
+            //Only works on Amazon Fire OS
+//            $status.append('<li>MESSAGE -> TIME: ' + e.payload.timeStamp + '</li>');
+
+            navigator.vibrate(300);
+            //alert(JSON.stringify(e));
+            $("#app-status-ul").append('<li>MESSAGE -> MSG: ' + e.message + '</li>');
+            navigator.notification.alert(
+                e.message,  // message
+                null,         // callback
+                'Message from AWS',            // title
+                'OK'                  // buttonName
+            );
+
+            break;
+
+        case 'error':
+            $("#app-status-ul").append('<li>ERROR -> MSG:' + e.msg + '</li>');
+            break;
+
+        default:
+            $("#app-status-ul").append('<li>EVENT -> Unknown, an event was received and we do not know what it is</li>');
+            break;
+    }
+}
+
+// iOS
+function onNotificationAPN(event) {
+    alert(JSON.stringify(event));
+
+    if (event.alert) {
+        navigator.notification.alert(event.alert);
+    }
+
+    if (event.sound) {
+        var snd = new Media(event.sound);
+        snd.play();
+    }
+
+    if (event.badge) {
+        pushNotification.setApplicationIconBadgeNumber(successHandler, errorHandler, event.badge);
+    }
 }
 
 var app = {
@@ -57,7 +182,7 @@ var app = {
     coords: null,
 
     // Map
-    geoSuccess: function(pos) {
+    geoSuccess: function (pos) {
         app.coords = pos.coords;
         $.each(document.querySelectorAll('td.coords'), function () {
             $(this).text(pos.coords[this.id]);
@@ -83,8 +208,8 @@ var app = {
         }
     },
 
-    geoError: function(e) {
-      console.log(e);
+    geoError: function (e) {
+        console.log(e);
     },
 
     // Hammer
@@ -126,7 +251,32 @@ var app = {
             });
         }
 
-        navigator.vibrate(300);
+
+        var notification = null;
+        switch (device.platform.toLowerCase()) {
+            case 'android':
+                notification = {
+                    senderID: senderID,
+                    ecb: 'onNotification'
+                };
+                break;
+            case 'ios':
+                notification = {
+                    badge: 'true',
+                    sound: 'true',
+                    alert: 'true',
+                    ecb: 'onNotificationAPN'
+                };
+                break;
+        }
+
+        var pushNotification = window.plugins.pushNotification;
+
+        if (pushNotification && notification) {
+            pushNotification.register(successHandler, errorHandler, notification);
+        }
+
+        //navigator.vibrate(300);
 
     },
 
