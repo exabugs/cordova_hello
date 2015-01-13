@@ -312,7 +312,6 @@ var app = {
 
         // Avoid angle sometimes jumps from 180 to -180
         if (170 <= Math.abs(element['data-dd'] - event.rotation)) {
-            //element['data-dr'] += 180;
             event.rotation += 180;
             console.log('jumps from 180 to -180');
         }
