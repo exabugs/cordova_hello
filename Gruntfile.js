@@ -123,6 +123,8 @@ module.exports = function(grunt) {
     //        'network-information',
     //        'splashscreen',
             'https://github.com/phonegap-build/PushPlugin.git',
+            'https://github.com/petermetz/cordova-plugin-ibeacon.git',
+            'https://github.com/katzer/cordova-plugin-local-notifications.git',
             'device'
           ]
         }

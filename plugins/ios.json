@@ -27,6 +27,14 @@
                         {
                             "xml": "<feature name=\"Notification\"><param name=\"ios-package\" value=\"CDVNotification\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"LocationManager\"><param name=\"ios-package\" value=\"CDVLocationManager\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"LocalNotification\"><param name=\"ios-package\" onload=\"true\" value=\"APPLocalNotification\" /><param name=\"onload\" value=\"true\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -36,13 +44,19 @@
                     "CoreLocation.framework": [
                         {
                             "xml": "false",
-                            "count": 1
+                            "count": 2
                         }
                     ],
                     "AudioToolbox.framework": [
                         {
                             "xml": "true",
                             "count": 2
+                        }
+                    ],
+                    "CoreBluetooth.framework": [
+                        {
+                            "xml": "false",
+                            "count": 1
                         }
                     ]
                 }
@@ -52,6 +66,16 @@
                     "NSLocationWhenInUseUsageDescription": [
                         {
                             "xml": "<string />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<string>This app would like to scan for iBeacons while it is in use.</string>",
+                            "count": 1
+                        }
+                    ],
+                    "NSLocationAlwaysUsageDescription": [
+                        {
+                            "xml": "<string>This app would like to scan for iBeacons even when in the background.</string>",
                             "count": 1
                         }
                     ]
@@ -73,6 +97,12 @@
             "PACKAGE_NAME": "io.cordova.hellocordova"
         },
         "org.apache.cordova.dialogs": {
+            "PACKAGE_NAME": "io.cordova.hellocordova"
+        },
+        "com.unarin.cordova.beacon": {
+            "PACKAGE_NAME": "io.cordova.hellocordova"
+        },
+        "de.appplant.cordova.plugin.local-notification": {
             "PACKAGE_NAME": "io.cordova.hellocordova"
         }
     },

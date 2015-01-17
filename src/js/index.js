@@ -57,7 +57,7 @@ function successHandler(result) {
 
 // result contains any error description text returned from the plugin call
 function errorHandler(error) {
-      alert('SNS register error = ' + error);
+    alert('SNS register error = ' + error);
 }
 
 // iOS
@@ -162,8 +162,98 @@ function onNotificationAPN(event) {
     }
 }
 
+function status_log(message) {
+    $("#app-status-ul").prepend('<li>' + message + '</li>');
+}
+
+
+//
+// iBeacon
+//
+
+var minor = null;
+
+function didDetermineStateForRegion(pluginResult) {
+    status_log('didDetermineStateForRegion: ' + JSON.stringify(pluginResult));
+    //        alert('didDetermineStateForRegion: ' + JSON.stringify(pluginResult));
+}
+
+function didStartMonitoringForRegion(pluginResult) {
+    status_log('didStartMonitoringForRegion:' + JSON.stringify(pluginResult));
+    //        alert('didStartMonitoringForRegion:' + JSON.stringify(pluginResult));
+}
+
+var minor_timeout = null;
+function outFromRoom(value) {
+    _outFromRoom(value);
+/*
+    if (minor_timeout) {
+        clearTimeout(minor_timeout);
+        _outFromRoom(value)
+    }
+    minor_timeout = setTimeout(function() {
+        _outFromRoom(value);
+    }, 1000);
+*/
+}
+
+function _outFromRoom(value) {
+    status_log('Room out :' + value);
+    minor = null;
+    minor_timeout = null;
+}
+
+function didRangeBeaconsInRegion(pluginResult) {
+    // status_log('didRangeBeaconsInRegion: ' + JSON.stringify(pluginResult));
+    //       alert('didRangeBeaconsInRegion: ' + JSON.stringify(pluginResult));
+    //app.didRangeBeaconsInRegion(pluginResult)
+    if (0 < pluginResult.beacons.length) {
+        var beacon = pluginResult.beacons[0];
+        if (beacon.proximity === 'ProximityImmediate') {
+
+            if (!minor) {
+                // 入室処理
+                //            $('#beacon').text(JSON.stringify(pluginResult.beacons));
+                minor = beacon.minor;
+                status_log('Room in :' + minor);
+            } else {
+                if (minor != beacon.minor) {
+                    // 退室処理
+                    outFromRoom(minor);
+                } else {
+                    // 同じだから何もしなくていい
+                }
+            }
+        } else {
+            if (minor) {
+                // 退室処理
+                outFromRoom(minor);
+            }
+        }
+    } else {
+        if (minor) {
+            // 退室処理
+            outFromRoom(minor);
+        } else {
+            // 同じだから何もしなくていい
+        }
+    }
+}
+
 var app = {
-    // Application Constructor
+
+    beaconRegions: [
+        {
+            // id: 'sakurai-001',
+            id: 'DUMMY-sakurai',
+            uuid: '00000000-057B-1001-B000-001C4D5226A7'
+          //  major: 1,
+          //  minor: 1
+        }
+    ],
+
+
+// Application Constructor
     initialize: function () {
         this.bindEvents();
     },
@@ -248,13 +338,52 @@ var app = {
         // Map
         navigator.geolocation.watchPosition(app.geoSuccess, app.geoError);
 
-        if (google.maps) {
-            app.googleMap = new google.maps.Map(document.getElementById('map-canvas'), {
+        var canvas = document.getElementById('map-canvas');
+        if (google.maps && canvas) {
+            app.googleMap = new google.maps.Map(canvas, {
                 zoom: 16,
                 mapTypeId: google.maps.MapTypeId.ROADMAP
             });
         }
 
+
+        navigator.vibrate(300);
+
+
+        //
+        // iBeacon
+        //
+        var delegate = new cordova.plugins.locationManager.Delegate();
+        delegate.didDetermineStateForRegion = didDetermineStateForRegion;
+        delegate.didStartMonitoringForRegion = didStartMonitoringForRegion;
+        delegate.didRangeBeaconsInRegion = didRangeBeaconsInRegion;
+        cordova.plugins.locationManager.setDelegate(delegate);
+
+        cordova.plugins.locationManager.requestWhenInUseAuthorization();
+        //cordova.plugins.locationManager.requestAlwaysAuthorization();
+
+        // Start monitoring and ranging our beacons.
+        for (var r in app.beaconRegions) {
+            var region = app.beaconRegions[r];
+
+            var beaconRegion = new cordova.plugins.locationManager.BeaconRegion(
+                region.id, region.uuid);
+             //   region.id, region.uuid, region.major, region.minor);
+
+            // Start monitoring.
+            cordova.plugins.locationManager.startMonitoringForRegion(beaconRegion)
+                .fail(console.error)
+                .done();
+
+            // Start ranging.
+            cordova.plugins.locationManager.startRangingBeaconsInRegion(beaconRegion)
+                .fail(console.error)
+                .done();
+        }
+
+        //
+        // Push Notification
+        //
         var pushNotification = window.plugins.pushNotification;
         if (pushNotification) {
 
@@ -280,8 +409,6 @@ var app = {
                     break;
             }
         }
-
-        //navigator.vibrate(300);
 
     },
 

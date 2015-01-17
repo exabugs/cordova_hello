@@ -34,6 +34,13 @@
     <feature name="Notification">
         <param name="ios-package" value="CDVNotification" />
     </feature>
+    <feature name="LocationManager">
+        <param name="ios-package" value="CDVLocationManager" />
+    </feature>
+    <feature name="LocalNotification">
+        <param name="ios-package" onload="true" value="APPLocalNotification" />
+        <param name="onload" value="true" />
+    </feature>
     <name>HelloCordova</name>
     <preference name="keepRunning" value="true" />
     <description>
