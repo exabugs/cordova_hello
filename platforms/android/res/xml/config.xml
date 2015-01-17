@@ -16,6 +16,9 @@
     <feature name="LocationManager">
         <param name="android-package" value="com.unarin.cordova.beacon.LocationManager" />
     </feature>
+    <feature name="LocalNotification">
+        <param name="android-package" value="de.appplant.cordova.plugin.localnotification.LocalNotification" />
+    </feature>
     <name>HelloCordova</name>
     <preference name="keepRunning" value="true" />
     <description>
@@ -26,7 +29,8 @@
     </author>
     <content src="index.html" />
     <access origin="*" />
-    <feature name="LocalNotification">
-        <param name="android-package" value="de.appplant.cordova.plugin.localnotification.LocalNotification" />
+    <feature name="BackgroundMode">
+        <param name="android-package" value="de.appplant.cordova.plugin.background.BackgroundMode" />
     </feature>
+    <preference name="KeepRunning" value="true" />
 </widget>

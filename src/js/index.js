@@ -200,9 +200,26 @@ function outFromRoom() {
 }
 
 function _outFromRoom() {
-    status_log('Room out :' + minor);
+    roomMessage(minor, false);
     minor = null;
     minor_timeout = null;
+}
+
+function roomMessage(value, flag) {
+    var message = 'Room [' + value + '] ' + (flag ? 'in' : 'out');
+    if (flag && !cordova.plugins.backgroundMode.isActive()) {
+        navigator.vibrate(300);
+    }
+    $("#beacon").text(message);
+
+    if (flag) {
+        window.plugin.notification.local.add({
+            id: 1,
+            title: 'iBeacon',
+            message: message,
+            date: new Date()
+        });
+    }
 }
 
 function didRangeBeaconsInRegion(pluginResult) {
@@ -216,7 +233,7 @@ function didRangeBeaconsInRegion(pluginResult) {
             if (!minor) {
                 // 入室処理
                 minor = beacon.minor;
-                status_log('Room in :' + minor);
+                roomMessage(minor, true);
             } else {
                 if (minor != beacon.minor) {
                     // 退室処理
@@ -340,8 +357,13 @@ var app = {
         }
 
 
-        navigator.vibrate(300);
+        // 起動時バイブレーション
+        // navigator.vibrate(300);
 
+        //
+        // [Danger!] Set Background Mode ON!
+        //
+        cordova.plugins.backgroundMode.enable();
 
         //
         // iBeacon

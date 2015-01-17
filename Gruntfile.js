@@ -125,6 +125,7 @@ module.exports = function(grunt) {
             'https://github.com/phonegap-build/PushPlugin.git',
             'https://github.com/petermetz/cordova-plugin-ibeacon.git',
             'https://github.com/katzer/cordova-plugin-local-notifications.git',
+            'https://github.com/katzer/cordova-plugin-background-mode.git',
             'device'
           ]
         }

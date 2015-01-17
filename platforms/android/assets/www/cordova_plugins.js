@@ -85,6 +85,14 @@ module.exports = [
             "cordova.plugins.notification.local",
             "plugin.notification.local"
         ]
+    },
+    {
+        "file": "plugins/de.appplant.cordova.plugin.background-mode/www/background-mode.js",
+        "id": "de.appplant.cordova.plugin.background-mode.BackgroundMode",
+        "clobbers": [
+            "cordova.plugins.backgroundMode",
+            "plugin.backgroundMode"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -96,7 +104,8 @@ module.exports.metadata =
     "com.phonegap.plugins.PushPlugin": "2.4.0",
     "org.apache.cordova.dialogs": "0.2.11",
     "com.unarin.cordova.beacon": "3.2.2",
-    "de.appplant.cordova.plugin.local-notification": "0.8.0dev"
+    "de.appplant.cordova.plugin.local-notification": "0.8.0dev",
+    "de.appplant.cordova.plugin.background-mode": "0.6.3"
 }
 // BOTTOM OF METADATA
 });
