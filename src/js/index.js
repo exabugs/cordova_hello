@@ -184,21 +184,23 @@ function didStartMonitoringForRegion(pluginResult) {
 }
 
 var minor_timeout = null;
-function outFromRoom(value) {
-    _outFromRoom(value);
-/*
-    if (minor_timeout) {
-        clearTimeout(minor_timeout);
-        _outFromRoom(value)
+function outFromRoom() {
+    if (minor) {
+        _outFromRoom();
     }
-    minor_timeout = setTimeout(function() {
-        _outFromRoom(value);
-    }, 1000);
-*/
+    /*
+     if (minor_timeout) {
+     clearTimeout(minor_timeout);
+     _outFromRoom(value)
+     }
+     minor_timeout = setTimeout(function() {
+     _outFromRoom(value);
+     }, 1000);
+     */
 }
 
-function _outFromRoom(value) {
-    status_log('Room out :' + value);
+function _outFromRoom() {
+    status_log('Room out :' + minor);
     minor = null;
     minor_timeout = null;
 }
@@ -213,30 +215,21 @@ function didRangeBeaconsInRegion(pluginResult) {
 
             if (!minor) {
                 // 入室処理
-                //            $('#beacon').text(JSON.stringify(pluginResult.beacons));
                 minor = beacon.minor;
                 status_log('Room in :' + minor);
             } else {
                 if (minor != beacon.minor) {
                     // 退室処理
-                    outFromRoom(minor);
-                } else {
-                    // 同じだから何もしなくていい
+                    outFromRoom();
                 }
             }
         } else {
-            if (minor) {
-                // 退室処理
-                outFromRoom(minor);
-            }
+            // 退室処理
+            outFromRoom();
         }
     } else {
-        if (minor) {
-            // 退室処理
-            outFromRoom(minor);
-        } else {
-            // 同じだから何もしなくていい
-        }
+        // 退室処理
+        outFromRoom();
     }
 }
 
@@ -247,8 +240,8 @@ var app = {
             // id: 'sakurai-001',
             id: 'DUMMY-sakurai',
             uuid: '00000000-057B-1001-B000-001C4D5226A7'
-          //  major: 1,
-          //  minor: 1
+            //  major: 1,
+            //  minor: 1
         }
     ],
 
@@ -368,7 +361,7 @@ var app = {
 
             var beaconRegion = new cordova.plugins.locationManager.BeaconRegion(
                 region.id, region.uuid);
-             //   region.id, region.uuid, region.major, region.minor);
+            //   region.id, region.uuid, region.major, region.minor);
 
             // Start monitoring.
             cordova.plugins.locationManager.startMonitoringForRegion(beaconRegion)
