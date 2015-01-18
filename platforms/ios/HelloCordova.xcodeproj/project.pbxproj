@@ -57,6 +57,8 @@
 		9174786C099C497D8F52A098 /* AppDelegate+APPLocalNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EC8C453CCE94D7592F6AFBC /* AppDelegate+APPLocalNotification.m */; };
 		5DF66994885B452A8C7F2AF6 /* UIApplication+APPLocalNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 60CFD7851AFC4CEAA5FD76CD /* UIApplication+APPLocalNotification.m */; };
 		41BCF369B80D493CBA69E1A7 /* UILocalNotification+APPLocalNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = AD475FF030B9400FA3E20F9B /* UILocalNotification+APPLocalNotification.m */; };
+		1CE7AA792D2B4120A96684DF /* APPBackgroundMode.m in Sources */ = {isa = PBXBuildFile; fileRef = DB1A4782876F4533AB939D82 /* APPBackgroundMode.m */; };
+		33F06A1FD3E14F03834C9EFF /* appbeep.wav in Resources */ = {isa = PBXBuildFile; fileRef = AA1ED91BCF444597BC7D7B3D /* appbeep.wav */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -154,6 +156,9 @@
 		72D98D1E775042E3A3171C1C /* AppDelegate+APPLocalNotification.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "AppDelegate+APPLocalNotification.h"; path = "de.appplant.cordova.plugin.local-notification/AppDelegate+APPLocalNotification.h"; sourceTree = "<group>"; fileEncoding = 4; };
 		CA2B9405302E4761907026F3 /* UIApplication+APPLocalNotification.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "UIApplication+APPLocalNotification.h"; path = "de.appplant.cordova.plugin.local-notification/UIApplication+APPLocalNotification.h"; sourceTree = "<group>"; fileEncoding = 4; };
 		63EEFCFD49C5409DAFC4926B /* UILocalNotification+APPLocalNotification.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "UILocalNotification+APPLocalNotification.h"; path = "de.appplant.cordova.plugin.local-notification/UILocalNotification+APPLocalNotification.h"; sourceTree = "<group>"; fileEncoding = 4; };
+		DB1A4782876F4533AB939D82 /* APPBackgroundMode.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "APPBackgroundMode.m"; path = "de.appplant.cordova.plugin.background-mode/APPBackgroundMode.m"; sourceTree = "<group>"; fileEncoding = 4; };
+		47796CA50F264E3BBC5CCA33 /* APPBackgroundMode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "APPBackgroundMode.h"; path = "de.appplant.cordova.plugin.background-mode/APPBackgroundMode.h"; sourceTree = "<group>"; fileEncoding = 4; };
+		AA1ED91BCF444597BC7D7B3D /* appbeep.wav */ = {isa = PBXFileReference; lastKnownFileType = unknown; name = "appbeep.wav"; path = "appbeep.wav"; sourceTree = "<group>"; fileEncoding = 4; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -230,6 +235,7 @@
 				308D05311370CCF300D202BF /* splash */,
 				8D1107310486CEB800E47090 /* HelloCordova-Info.plist */,
 				561FB51B69834F09B4EECBEE /* CDVNotification.bundle */,
+				AA1ED91BCF444597BC7D7B3D /* appbeep.wav */,
 			);
 			name = Resources;
 			path = "HelloCordova/Resources";
@@ -287,6 +293,8 @@
 				72D98D1E775042E3A3171C1C /* AppDelegate+APPLocalNotification.h */,
 				CA2B9405302E4761907026F3 /* UIApplication+APPLocalNotification.h */,
 				63EEFCFD49C5409DAFC4926B /* UILocalNotification+APPLocalNotification.h */,
+				DB1A4782876F4533AB939D82 /* APPBackgroundMode.m */,
+				47796CA50F264E3BBC5CCA33 /* APPBackgroundMode.h */,
 			);
 			name = Plugins;
 			path = "HelloCordova/Plugins";
@@ -441,6 +449,7 @@
 				7E7966E51810823500FA85AD /* icon-76@2x.png in Resources */,
 				30FC414916E50CA1004E6F35 /* icon-72@2x.png in Resources */,
 				9BD57659705C45FDBFB325EB /* CDVNotification.bundle in Resources */,
+				33F06A1FD3E14F03834C9EFF /* appbeep.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -486,6 +495,7 @@
 				9174786C099C497D8F52A098 /* AppDelegate+APPLocalNotification.m in Sources */,
 				5DF66994885B452A8C7F2AF6 /* UIApplication+APPLocalNotification.m in Sources */,
 				41BCF369B80D493CBA69E1A7 /* UILocalNotification+APPLocalNotification.m in Sources */,
+				1CE7AA792D2B4120A96684DF /* APPBackgroundMode.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

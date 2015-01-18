@@ -221,28 +221,39 @@ function roomMessage(value, flag) {
         });
     }
 }
-
+var beacons = [];
 function didRangeBeaconsInRegion(pluginResult) {
     // status_log('didRangeBeaconsInRegion: ' + JSON.stringify(pluginResult));
     //       alert('didRangeBeaconsInRegion: ' + JSON.stringify(pluginResult));
     //app.didRangeBeaconsInRegion(pluginResult)
-    if (0 < pluginResult.beacons.length) {
-        var beacon = pluginResult.beacons[0];
-        if (beacon.proximity === 'ProximityImmediate') {
-
-            if (!minor) {
-                // 入室処理
-                minor = beacon.minor;
-                roomMessage(minor, true);
-            } else {
-                if (minor != beacon.minor) {
-                    // 退室処理
-                    outFromRoom();
-                }
-            }
+    var beacon = null;
+    for (var i in pluginResult.beacons) {
+        var _beacon = pluginResult.beacons[i];
+        if (!beacon || beacon.accuracy > _beacon.accuracy) {
+            beacon = _beacon;
+        }
+    }
+    beacons.push(beacon);
+    3 < beacons.length && (beacons = beacons.slice(1));
+    for (var i in beacons) {
+        var _beacon = beacons[i];
+        if ((!beacon && !_beacon) ||
+            ((beacon.major === _beacon.major) && (beacon.minor === _beacon.minor) && (beacon.proximity === _beacon.proximity))) {
         } else {
-            // 退室処理
-            outFromRoom();
+            return; // Do Nothig.
+        }
+    }
+
+    if (beacon && beacon.proximity === 'ProximityImmediate') {
+        if (!minor) {
+            // 入室処理
+            minor = beacon.minor;
+            roomMessage(minor, true);
+        } else {
+            if (minor != beacon.minor) {
+                // 退室処理
+                outFromRoom();
+            }
         }
     } else {
         // 退室処理
